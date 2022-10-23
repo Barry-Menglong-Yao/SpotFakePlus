@@ -80,7 +80,36 @@ def gen_text_embedding(data_path):
             with open('data/feature/finalTestEmbeddings2.pkl', 'wb') as f:
                 pickle.dump(embeddings, f)
         print(embeddings)
-                    
+                  
+
+def gen_text_embedding_for_mocheg(data_path):
+    txt_in_dir=os.path.join(data_folder,mode )
+
+    tokenizer = XLNetTokenizer.from_pretrained('xlnet-base-cased')
+    model = XLNetModel.from_pretrained('xlnet-base-cased')
+    model.to('cuda')
+    # Load Training and Testing Data 
+    self.news_dict,self.relevant_document_text_list,self.relevant_document_img_list=read_news(txt_in_dir,content_type,skip_empty_text_evidence,paragraph_sent_num)
+    
+    with open(data_path, 'r') as f:
+        testData = json.load(f)
+        embeddings = {}
+        lengths = []    
+        queryList =  testData 
+        exceptions = []
+        from tqdm  import tqdm
+        with torch.no_grad():
+            embeddings = {}
+            for i in tqdm(queryList):
+                try:
+                    embeddings[i["id"]] = torchEmbeddings(i["text"],tokenizer,model)
+                except Exception as e:
+                    print(e)
+                    exceptions.append(i)
+            with open('data/feature/finalTestEmbeddings2.pkl', 'wb') as f:
+                pickle.dump(embeddings, f)
+        print(embeddings)
+                      
         
 if __name__ == "__main__":
     
