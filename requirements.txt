@@ -1,0 +1,12 @@
+botocore==1.12.120
+boto==2.49.0
+boto3==1.9.120
+numpy==1.16.4
+urllib3==1.24.1
+matplotlib==2.2.3
+embedding-as-service==0.6.0
+tensorflow==1.14.0
+tensorflow-gpu==1.14.0
+keras==2.2.4
+pytorch-transformers==1.0.0
+ 
